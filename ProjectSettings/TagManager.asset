@@ -47,3 +47,6 @@ TagManager:
   - name: powerups
     uniqueID: 398029047
     locked: 0
+  - name: UI
+    uniqueID: 2167419679
+    locked: 0
