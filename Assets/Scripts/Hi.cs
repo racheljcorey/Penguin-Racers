@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Hi : MonoBehaviour {
 
+    private int changed;
+
 	// Use this for initialization
 	void Start () {
 		
