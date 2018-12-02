@@ -36,16 +36,21 @@ namespace cakeslice
 
         public int color;
         public bool eraseRenderer;
+        private GameObject canvas;
+        private DetectClicks detectClicks;
+        private GameObject activeWindow;
 
 
         private void Awake()
         {
             Renderer = GetComponent<Renderer>();
+            canvas = GameObject.Find("Canvas");
+            detectClicks = GameObject.Find("DetectClicks").GetComponent<DetectClicks>();
         }
 
         private void Update()
         {
-            
+
         }
 
         void OnEnable()
@@ -74,7 +79,13 @@ namespace cakeslice
 
         private void OnMouseDown()
         {
-            eraseRenderer = false;
+            var islandPopup = GameObject.FindGameObjectWithTag("Popup");
+            if (islandPopup == null)
+            {
+                eraseRenderer = false;
+                activeWindow = Instantiate(Resources.Load("Prefabs/UI/Islands/" + gameObject.name), canvas.transform) as GameObject;
+                activeWindow.name = "Island Popup" + gameObject.name;
+            }
         }
     }
 }

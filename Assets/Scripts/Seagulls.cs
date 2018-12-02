@@ -30,7 +30,6 @@ public class Seagulls : MonoBehaviour {
                 }
                 if (other.tag == "Enemy")
                 {
-                    Debug.Log("test");
                     isInCollision = true;
                     StartCoroutine(SlowEnemy());
                 }
