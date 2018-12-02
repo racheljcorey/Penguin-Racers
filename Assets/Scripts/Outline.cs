@@ -37,12 +37,10 @@ namespace cakeslice
         public int color;
         public bool eraseRenderer;
 
-        private DetectClicks clickDetector;
 
         private void Awake()
         {
             Renderer = GetComponent<Renderer>();
-            clickDetector = GameObject.Find("DetectClicks").GetComponent<DetectClicks>();
         }
 
         private void Update()
@@ -76,7 +74,6 @@ namespace cakeslice
 
         private void OnMouseDown()
         {
-            clickDetector.clickedObject = true;
             eraseRenderer = false;
         }
     }
