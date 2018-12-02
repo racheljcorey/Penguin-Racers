@@ -39,17 +39,12 @@ public class DetectClicks : MonoBehaviour {
                 clickedObject = false;
             }
 
-            //if (!clickedObject)
-            //{
-            //    foreach (GameObject island in islands)
-            //    {
-            //        island.GetComponent<Outline>().eraseRenderer = true;
-            //    }
-            //}
-
-            if (island.GetComponent<Outline>() != null)
+            if (!clickedObject)
             {
-                Debug.Log("test");
+                foreach (GameObject island in islands)
+                {
+                    island.GetComponent<Outline>().eraseRenderer = true;
+                }
             }
         }
 
