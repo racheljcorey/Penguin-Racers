@@ -113,10 +113,12 @@ namespace cakeslice
                     case 1:
                         titleText.text = "This is the First Island";
                         descText.text = "This is the first island, where you'll go to race first!";
+                        actTrans.position = new Vector3(screenPoint.x + 176, screenPoint.y - 44, -10);
                         break;
                     case 2:
                         titleText.text = "This is the Second Island";
                         descText.text = "This is the second island, where you'll go to race second.";
+                        actTrans.position = new Vector3(screenPoint.x - 184, screenPoint.y - 55, -10);
                         break;
                     default:
                         Debug.Log("all");

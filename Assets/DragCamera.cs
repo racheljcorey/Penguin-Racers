@@ -20,7 +20,7 @@ public class DragCamera : MonoBehaviour
         float vertExtent = cam.orthographicSize;
         spriteBounds = GameObject.Find("background").GetComponentInChildren<SpriteRenderer>();
         bottomBound = (float)(vertExtent - spriteBounds.sprite.bounds.size.y / 2.0f);
-        bottomBoundY = spriteBounds.sprite.bounds.size.y * spriteBounds.transform.localScale.y;
+        bottomBoundY = spriteBounds.sprite.bounds.size.y;
         topBound = (float)(spriteBounds.sprite.bounds.size.y / 2.0f - vertExtent);
     }
 
