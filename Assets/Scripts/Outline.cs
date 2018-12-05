@@ -88,6 +88,8 @@ namespace cakeslice
             {
                 Vector3 islPos = cam.WorldToViewportPoint(new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, -10));
 
+                Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(Camera.main, gameObject.transform.position);
+
                 eraseRenderer = false;
                 //activeWindow = Instantiate(Resources.Load("Prefabs/UI/Islands/IslandPopup"), canvas.transform) as GameObject;
                 activeWindow = Instantiate(Resources.Load("Prefabs/UI/Islands/IslandPopup"), islPos, Quaternion.identity) as GameObject;
@@ -97,14 +99,14 @@ namespace cakeslice
                 var titleText = GameObject.FindGameObjectWithTag("IslandTitle").GetComponent<TMP_Text>();
                 var descText = GameObject.FindGameObjectWithTag("IslandDesc").GetComponent<TMP_Text>();
                 //actTrans.localPosition = islPos;
-                //actTrans.anchoredPosition = islPos;
+                actTrans.position = screenPoint;
                 //actTrans.position = islPos;
 
-                Vector2 WorldObject_ScreenPosition = new Vector2(
-                  ((islPos.x * canvasRect.sizeDelta.x) - (canvasRect.sizeDelta.x * 0.5f)),
-                  ((islPos.y * canvasRect.sizeDelta.y - (canvasRect.sizeDelta.y * 0.5f))));
+                //Vector2 WorldObject_ScreenPosition = new Vector2(
+                //  ((islPos.x * canvasRect.sizeDelta.x) - (canvasRect.sizeDelta.x * 0.5f)),
+                //  ((islPos.y * canvasRect.sizeDelta.y - (canvasRect.sizeDelta.y * 0.5f))));
 
-                actTrans.anchoredPosition = WorldObject_ScreenPosition;
+                //actTrans.anchoredPosition = WorldObject_ScreenPosition;
 
                 switch (System.Convert.ToInt16(gameObject.name))
                 {
