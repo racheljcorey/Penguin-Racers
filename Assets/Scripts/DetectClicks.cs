@@ -7,7 +7,7 @@ public class DetectClicks : MonoBehaviour {
 
     public bool clickedObject;
     private Ray ray;
-    private RaycastHit hit;
+    public RaycastHit hit;
     private GameObject[] islands;
     private GameObject islandPopup;
 
@@ -29,11 +29,10 @@ public class DetectClicks : MonoBehaviour {
         if (Input.GetMouseButtonUp(0))
         {
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
+            
             if (Physics.Raycast(ray, out hit) && hit.transform.tag == "Island")
             {
                 clickedObject = true;
-                
             }
             else
             {
@@ -62,7 +61,7 @@ public class DetectClicks : MonoBehaviour {
 
     IEnumerator windowWait()
     {
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.6f);
         Destroy(islandPopup);
     }
 }

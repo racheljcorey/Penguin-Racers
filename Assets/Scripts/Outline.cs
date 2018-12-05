@@ -25,6 +25,7 @@
 using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
+using TMPro;
 
 namespace cakeslice
 {
@@ -39,13 +40,16 @@ namespace cakeslice
         private GameObject canvas;
         private DetectClicks detectClicks;
         private GameObject activeWindow;
-
+        private Camera cam;
+        RectTransform canvasRect;
 
         private void Awake()
         {
             Renderer = GetComponent<Renderer>();
+            cam = Camera.main;
             canvas = GameObject.Find("Canvas");
             detectClicks = GameObject.Find("DetectClicks").GetComponent<DetectClicks>();
+            canvasRect = GameObject.Find("Canvas").GetComponent<RectTransform>();
         }
 
         private void Update()
@@ -79,12 +83,43 @@ namespace cakeslice
 
         private void OnMouseDown()
         {
-            var islandPopup = GameObject.FindGameObjectWithTag("Popup");
+            GameObject islandPopup = GameObject.FindGameObjectWithTag("Popup");
             if (islandPopup == null)
             {
+                Vector3 islPos = cam.WorldToViewportPoint(new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, -10));
+
                 eraseRenderer = false;
-                activeWindow = Instantiate(Resources.Load("Prefabs/UI/Islands/" + gameObject.name), canvas.transform) as GameObject;
+                //activeWindow = Instantiate(Resources.Load("Prefabs/UI/Islands/IslandPopup"), canvas.transform) as GameObject;
+                activeWindow = Instantiate(Resources.Load("Prefabs/UI/Islands/IslandPopup"), islPos, Quaternion.identity) as GameObject;
+                activeWindow.transform.SetParent(canvas.transform, false);
                 activeWindow.name = "Island Popup" + gameObject.name;
+                var actTrans = activeWindow.GetComponent<RectTransform>();
+                var titleText = GameObject.FindGameObjectWithTag("IslandTitle").GetComponent<TMP_Text>();
+                var descText = GameObject.FindGameObjectWithTag("IslandDesc").GetComponent<TMP_Text>();
+                //actTrans.localPosition = islPos;
+                //actTrans.anchoredPosition = islPos;
+                //actTrans.position = islPos;
+
+                Vector2 WorldObject_ScreenPosition = new Vector2(
+                  ((islPos.x * canvasRect.sizeDelta.x) - (canvasRect.sizeDelta.x * 0.5f)),
+                  ((islPos.y * canvasRect.sizeDelta.y - (canvasRect.sizeDelta.y * 0.5f))));
+
+                actTrans.anchoredPosition = WorldObject_ScreenPosition;
+
+                switch (System.Convert.ToInt16(gameObject.name))
+                {
+                    case 1:
+                        titleText.text = "This is the First Island";
+                        descText.text = "This is the first island, where you'll go to race first!";
+                        break;
+                    case 2:
+                        titleText.text = "This is the Second Island";
+                        descText.text = "This is the second island, where you'll go to race second.";
+                        break;
+                    default:
+                        Debug.Log("all");
+                        break;
+                }
             }
         }
     }

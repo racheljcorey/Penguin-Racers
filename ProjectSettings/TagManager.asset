@@ -9,6 +9,8 @@ TagManager:
   - Enemy
   - Island
   - Popup
+  - IslandTitle
+  - IslandDesc
   layers:
   - Default
   - TransparentFX
