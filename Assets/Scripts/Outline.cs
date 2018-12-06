@@ -25,6 +25,7 @@
 using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 namespace cakeslice
@@ -37,11 +38,13 @@ namespace cakeslice
 
         public int color;
         public bool eraseRenderer;
+        private bool windowActive;
         private GameObject canvas;
         private DetectClicks detectClicks;
         private GameObject activeWindow;
         private Camera cam;
-        RectTransform canvasRect;
+        private RectTransform canvasRect;
+        private ScreenTransitionImageEffect screenTrans;
 
         private void Awake()
         {
@@ -50,11 +53,7 @@ namespace cakeslice
             canvas = GameObject.Find("Canvas");
             detectClicks = GameObject.Find("DetectClicks").GetComponent<DetectClicks>();
             canvasRect = GameObject.Find("Canvas").GetComponent<RectTransform>();
-        }
-
-        private void Update()
-        {
-
+            screenTrans = cam.GetComponent<ScreenTransitionImageEffect>();
         }
 
         void OnEnable()
@@ -91,28 +90,26 @@ namespace cakeslice
                 Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(Camera.main, gameObject.transform.position);
 
                 eraseRenderer = false;
-                //activeWindow = Instantiate(Resources.Load("Prefabs/UI/Islands/IslandPopup"), canvas.transform) as GameObject;
+                windowActive = true;
                 activeWindow = Instantiate(Resources.Load("Prefabs/UI/Islands/IslandPopup"), islPos, Quaternion.identity) as GameObject;
                 activeWindow.transform.SetParent(canvas.transform, false);
                 activeWindow.name = "Island Popup" + gameObject.name;
                 var actTrans = activeWindow.GetComponent<RectTransform>();
                 var titleText = GameObject.FindGameObjectWithTag("IslandTitle").GetComponent<TMP_Text>();
                 var descText = GameObject.FindGameObjectWithTag("IslandDesc").GetComponent<TMP_Text>();
-                //actTrans.localPosition = islPos;
                 actTrans.position = screenPoint;
-                //actTrans.position = islPos;
-
-                //Vector2 WorldObject_ScreenPosition = new Vector2(
-                //  ((islPos.x * canvasRect.sizeDelta.x) - (canvasRect.sizeDelta.x * 0.5f)),
-                //  ((islPos.y * canvasRect.sizeDelta.y - (canvasRect.sizeDelta.y * 0.5f))));
-
-                //actTrans.anchoredPosition = WorldObject_ScreenPosition;
 
                 switch (System.Convert.ToInt16(gameObject.name))
                 {
+                    case 0:
+                        titleText.text = "Shop";
+                        descText.text = "Spend those coins to upgrade your surfboard here!";
+                        actTrans.position = new Vector3(screenPoint.x + 55, screenPoint.y - 145, -10);
+                        break;
                     case 1:
-                        titleText.text = "This is the First Island";
-                        descText.text = "This is the first island, where you'll go to race first!";
+                        titleText.text = "First Island";
+                        descText.text = "This first island is the first place to race.$$(Tap again to travel)";
+                        descText.text = descText.text.Replace('$', '\n');
                         actTrans.position = new Vector3(screenPoint.x + 176, screenPoint.y - 44, -10);
                         break;
                     case 2:
@@ -123,6 +120,17 @@ namespace cakeslice
                     default:
                         Debug.Log("all");
                         break;
+                }
+            }
+
+            //go to next Island
+            if (windowActive && Input.GetMouseButtonDown(0) && detectClicks.clickedObject)
+            {
+                if (detectClicks.nameOfHit == gameObject.name)
+                {
+                    Destroy(activeWindow);
+                    StartCoroutine(screenTrans.FadeOut());
+                    StartCoroutine(detectClicks.waitForFade(System.Convert.ToInt16(gameObject.name)));
                 }
             }
         }
