@@ -11,6 +11,7 @@ TagManager:
   - Popup
   - IslandTitle
   - IslandDesc
+  - PauseMenu
   layers:
   - Default
   - TransparentFX
