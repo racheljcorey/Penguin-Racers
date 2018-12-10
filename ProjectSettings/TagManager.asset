@@ -12,6 +12,7 @@ TagManager:
   - IslandTitle
   - IslandDesc
   - PauseMenu
+  - Surfboard
   layers:
   - Default
   - TransparentFX

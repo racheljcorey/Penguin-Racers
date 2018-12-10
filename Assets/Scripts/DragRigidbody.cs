@@ -27,10 +27,16 @@ public class DragRigidbody : MonoBehaviour
     private Vector3 moving;
     private Vector3 prevHeading;
     private Vector3 lastPos;
+    private Vector3 backAdj;
+    private SpriteRenderer surfboard;
+    private Transform splash;
+
 
     private void Start()
     {
         anim = GetComponent<Animator>();
+        surfboard = GameObject.FindGameObjectWithTag("Surfboard").GetComponent<SpriteRenderer>();
+        splash = GameObject.Find("Splash").GetComponent<Transform>();
 
     }
 
@@ -67,6 +73,17 @@ public class DragRigidbody : MonoBehaviour
             anim.SetBool("turnLeft", false);
             anim.SetBool("straight", false);
             anim.SetBool("turnRight", true);
+        }
+        if (curPos.y < lastPos.y)
+        {
+            //surfboard.flipY = true;
+            //anim.SetBool("turnBack", true);
+            
+        }
+        if (curPos.y > lastPos.y)
+        {
+            //surfboard.flipY = false;
+            //anim.SetBool("turnBack", false);
         }
         else if (curPos == lastPos)
         {
