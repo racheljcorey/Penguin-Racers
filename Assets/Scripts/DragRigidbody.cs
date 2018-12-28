@@ -36,7 +36,6 @@ public class DragRigidbody : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         surfboard = GameObject.FindGameObjectWithTag("Surfboard").GetComponent<SpriteRenderer>();
-        splash = GameObject.Find("Splash").GetComponent<Transform>();
 
     }
 

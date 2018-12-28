@@ -28,7 +28,6 @@ public class FollowWaypoints : MonoBehaviour
     void FixedUpdate()
     {
         handleWalkWaypoints();
-        Debug.Log(_targetWaypoint);
     }
 
     // Handle walking the waypoints
